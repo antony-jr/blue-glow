@@ -82,7 +82,7 @@ void GithubAPI::handleLogin(){
 	m_Buffer->append(reply->readAll());
 
 	auto json = QJsonDocument::fromJson(*(m_Buffer.data()));	
-	if(QJsonValue::Undefined == (json["message"]).type() ||
+	if(QJsonValue::Undefined == ((json.object()).value("message")).type() ||
 	    (json.array()).size()){
 		emit logged((b_Logged = true));
 		m_Buffer->clear();
