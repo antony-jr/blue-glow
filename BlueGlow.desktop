@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=BlueGlow
+Type=Application
+Exec=BlueGlow
+Icon=BlueGlow
+Terminal=false
+Categories=System;
+Comment=A simple system tray application to watch github notifications

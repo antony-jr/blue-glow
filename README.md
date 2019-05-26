@@ -35,6 +35,13 @@ A simple system tray icon program that glows blue and optionally notifies you wh
 Only requires a **personal github token** which has a permission to read your notifications. (does not require any other permissions)
 
 
+# Other Platform Support
+
+I don't really think that anyone would use this , I mainly created this for myself. So if you need this application for
+other platforms other than linux , Then I would be happy to activate automatic builds for Windows and MacOSX.
+(PS: The application is mostly cross platform)
+
+
 # Icons
 
 Icons made by [Chanut](https://www.flaticon.com/authors/chanut) and 

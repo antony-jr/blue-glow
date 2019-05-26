@@ -8,7 +8,7 @@ GithubAPI::GithubAPI(QSettings *settings , QObject *parent)
 	: QObject(parent),
 	  m_Settings(settings),
 	  m_Manager(new QNetworkAccessManager(parent)),
-	  n_Interval(1000)
+	  n_Interval(3000)
 {
 	Q_ASSERT(m_Settings != nullptr);
 	Q_ASSERT(m_Manager != nullptr);
