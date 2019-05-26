@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>327</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>620</width>
-    <height>325</height>
+    <height>350</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>620</width>
-    <height>327</height>
+    <height>357</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
              <pixmap resource="resources/resources.qrc">:/banner.png</pixmap>
             </property>
             <property name="scaledContents">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -81,37 +81,17 @@
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
          <layout class="QGridLayout" name="SettingsGridLayout">
-          <item row="6" column="0" colspan="2">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="okBtn">
+            <property name="text">
+             <string>Save</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
-          <item row="7" column="0">
+          <item row="6" column="0">
            <widget class="QPushButton" name="cancelBtn">
             <property name="text">
              <string>Cancel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="showTitleOfNotification">
-            <property name="text">
-             <string>Show title of the notification</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkUpdatesAuto">
-            <property name="text">
-             <string>Check for updates automatically</string>
             </property>
            </widget>
           </item>
@@ -122,10 +102,17 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QPushButton" name="okBtn">
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="showPopupMsg">
             <property name="text">
-             <string>Save</string>
+             <string>Show popup messages when a new notification arrives</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="notifyWithSound">
+            <property name="text">
+             <string>Notify with sound</string>
             </property>
            </widget>
           </item>
@@ -143,21 +130,47 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="showPopupMsg">
-            <property name="text">
-             <string>Show popup messages when a notification arrives</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="notifyWithSound">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QPushButton" name="delGithubTokenBtn">
             <property name="text">
-             <string>Notify with sound</string>
+             <string>Delete Github Token</string>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="Loading">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QLabel" name="loadingGif">
+          <property name="minimumSize">
+           <size>
+            <width>165</width>
+            <height>165</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -166,6 +179,46 @@
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>620</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources/resources.qrc"/>

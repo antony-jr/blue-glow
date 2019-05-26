@@ -7,8 +7,8 @@ QT += core network gui widgets
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-SOURCES += main.cc BlueGlow.cc
-HEADERS += BlueGlow.hpp
+SOURCES += main.cc BlueGlow.cc GithubAPI.cc
+HEADERS += BlueGlow.hpp GithubAPI.hpp
 
 RESOURCES += resources/resources.qrc
 FORMS += mainwindow.ui
