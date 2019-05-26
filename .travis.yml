@@ -27,7 +27,7 @@ script:
   - ./linuxdeploy-x86_64.AppImage --appdir=appdir -d appdir/usr/share/applications/BlueGlow.desktop -p qt
   - wget -O updatedeployqt-continuous-x86_64.AppImage "https://git.io/fj4CH"
   - chmod +x updatedeployqt-continuous-x86_64.AppImage
-  - ./updatedeployqt-continuous-x86_64.AppImage AppImage appdir/usr/plugins/platforms/libqxcb.so -l appdir/usr/lib -n 
+  - ./updatedeployqt-continuous-x86_64.AppImage AppImage appdir/usr/plugins/platforms/libqxcb.so -l appdir/usr/lib -n -qv "5.9.0" 
   - wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
   - chmod +x appimagetool-x86_64.AppImage 
   - ./appimagetool-x86_64.AppImage -g --no-appstream appdir 
