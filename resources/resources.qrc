@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file></file>
+    <file>logo.png</file>
+    <file>no-notification.png</file>
+    <file>has-notification.png</file>
+    <file>banner.png</file>
+</qresource>
+</RCC>
