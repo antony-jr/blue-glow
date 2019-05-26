@@ -1,0 +1,42 @@
+language: cpp
+compiler: gcc
+sudo: require
+dist: trusty
+
+before_install:
+  - sudo add-apt-repository ppa:beineri/opt-qt593-trusty -y
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get -y install qt59base qt59multimedia
+  - source /opt/qt*/bin/qt*-env.sh
+
+script:
+  - mkdir build
+  - cd build
+  - qmake ..
+  - make -j$(nproc)
+  - cd ..
+  - mkdir -p appdir/usr/bin ; strip build/BlueGlow ; cp build/BlueGlow appdir/usr/bin/
+  - mkdir -p appdir/usr/share/applications ; cp BlueGlow.desktop appdir/usr/share/applications/
+  - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; cp resources/logo.png appdir/usr/share/icons/hicolor/256x256/apps/BlueGlow.png
+  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+  - wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage  
+  - chmod +x linuxdeploy*.AppImage
+  - ./linuxdeploy-x86_64.AppImage --appdir=appdir -d appdir/usr/share/applications/QTalarm.desktop -p qt
+  - wget -O updatedeployqt-continuous-x86_64.AppImage "https://git.io/fj4CH"
+  - chmod +x updatedeployqt-continuous-x86_64.AppImage
+  - ./updatedeployqt-continuous-x86_64.AppImage AppImage appdir/usr/plugins/platforms/libqxcb.so -l appdir/usr/lib -n 
+  - wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+  - chmod +x appimagetool-x86_64.AppImage 
+  - ./appimagetool-x86_64.AppImage -g --no-appstream appdir 
+
+after_success:
+  - wget "https://github.com/probonopd/uploadtool/raw/master/upload.sh"
+  - bash upload.sh BlueGlow*.AppImage *zsync
+  
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)/
