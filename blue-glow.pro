@@ -1,9 +1,8 @@
 INCLUDEPATH += . $(PWD)
 TEMPLATE = app
-LIBS += -lutil
 CONFIG += release
 TARGET = BlueGlow
-QT += core network gui widgets
+QT += core network gui widgets multimedia
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

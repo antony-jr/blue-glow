@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <BlueGlow.hpp>
 #include <QScreen>
+#include <QSound>
 
 /* Useful macros to convert bool to Qt::Checked and Qt::Unchecked and vice-versa */
 #define IS_CHECKED(checkbox) (checkbox->checkState() == Qt::Checked) ? true : false
@@ -104,8 +105,7 @@ void BlueGlow::handleNotifications(qint64 newNotifications , qint64 n){
     }
 
     if(m_Settings.value("notifyWithSound").toBool()){
-	    /* TODO:
-	     * 	Use QMultiMedia to play a sound. */
+	    QSound::play(":/sound.wav");
     }
 }
 
