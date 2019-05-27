@@ -42,7 +42,7 @@ private:
     QString m_DEntry = QString::fromUtf8("[Desktop Entry]\n"
 		                         "Name=AppImageUpdater\n"
 					 "Type=Application\n"
-					 "Exec=%1\n"
+					 "Exec=%1 --startup\n"
 					 "Terminal=false");
     Ui::MainWindow m_Ui;
     QSettings m_Settings;
