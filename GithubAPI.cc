@@ -108,12 +108,19 @@ void GithubAPI::handleNotification(){
 
 	qint64 newNotifications = 0;
 	auto json = (QJsonDocument::fromJson(*(m_Buffer.data()))).array();
-	foreach(const QJsonValue &value , json){
-		auto nId = ((value.toObject())["id"]).toString() +
-			   ((value.toObject())["last_read_at"]).toString();
-		if(!m_KnownNotifications->contains(nId)){
-			m_KnownNotifications->append(nId);
-			++newNotifications;
+	
+	/* clear the m_KnownNotifications if there is no notifications to work
+	 * on , this is to save space. */
+	if(json.size() == 0){
+		m_KnownNotifications->clear();
+	}else{
+		foreach(const QJsonValue &value , json){
+			auto nId = ((value.toObject())["id"]).toString() +
+				((value.toObject())["last_read_at"]).toString();
+			if(!m_KnownNotifications->contains(nId)){
+				m_KnownNotifications->append(nId);
+				++newNotifications;
+			}
 		}
 	}
 
