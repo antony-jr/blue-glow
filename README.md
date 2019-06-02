@@ -34,7 +34,7 @@
 A simple system tray icon program that glows blue and optionally notifies you when you get a github notification.
 Only requires a **personal github token** which has a permission to read your notifications. (does not require any other permissions)
 
-# How to get the Github Authorization Token
+# Github Authorization Token Generation
 
 
 * Head to [https://github.com/settings/tokens](https://github.com/settings/tokens) , click on **'generate new token'** button.
