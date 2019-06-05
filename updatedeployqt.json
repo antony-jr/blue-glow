@@ -1,6 +1,6 @@
 {
    "name" : "Blue Glow",
-   "version" : "v0.0.2",
+   "version" : "v0.0.3",
    "qt-version" : "5.9.0",
    "bridge" : "AppImageUpdater",
    "manual-update-check" : {
