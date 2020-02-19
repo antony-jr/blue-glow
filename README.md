@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="logo.png" alt="Logo">
+</p>
+
 <h1 align="center">Blue Glow</h1>
 <p align="center">
     <img src="https://img.shields.io/github/issues/antony-jr/blue-glow.svg?style=flat-square" alt="issues" / >
