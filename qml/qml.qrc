@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>main.qml</file>
+    <file>Components/MainMenu.qml</file>
+    <file>Components/AboutPage.qml</file>
+    <file>Components/AuthPage.qml</file>
+    <file>Components/ErrorDialog.qml</file> 
+</qresource>
+</RCC>
