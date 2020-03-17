@@ -42,11 +42,13 @@ ApplicationWindow {
      * components to navigate through different 
      * screens in the Application.
     */
-    property bool showAuthPage: true // Default page
-    property bool showSettingsPage: false
-    property bool showAboutPage: false
+    property bool showAuthPage: true; // Default page
+    property bool showSettingsMenuItem: false;
+    property bool showSettingsPage: false;
+    property bool showAboutPage: false;
     property bool showErrorDialog: false;
     property bool darkMode: false;
+    property string bannerImage: "qrc:/banner-dark.png";
     property string errorTitle;
     property string errorMessage;
 
@@ -64,6 +66,11 @@ ApplicationWindow {
 
 
     /* All the Pages. */
+    Components.SettingsPage {
+	id: settingsPage
+	mainWindow: root
+    }
+
     Components.AboutPage {
 	id: aboutPage
 	mainWindow: root

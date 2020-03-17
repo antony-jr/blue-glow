@@ -5,6 +5,17 @@ MenuBar {
 	property ApplicationWindow mainWindow; 
         Menu {
 	    title: qsTr("File")
+
+	    MenuItem {
+		text: qsTr("Settings")
+		enabled: mainWindow.showSettingsMenuItem
+		onTriggered: {
+			mainWindow.showAuthPage = false;
+			mainWindow.showSettingsPage = true;
+			mainWindow.showAboutPage = false;
+		}
+	    }
+
 	    MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();

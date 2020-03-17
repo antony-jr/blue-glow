@@ -20,7 +20,7 @@ GridLayout {
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter 
 			cache: true
 			fillMode: Image.PreserveAspectFit
-			source: 'qrc:/banner-dark.png'
+			source: mainWindow.bannerImage
 		}
 	
 		TextField {	
