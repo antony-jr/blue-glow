@@ -5,6 +5,7 @@
     <file>logo.png</file>
     <file>no-notification.png</file>
     <file>has-notification.png</file>
-    <file>banner.png</file>
+    <file>banner-light.png</file>
+    <file>banner-dark.png</file>
 </qresource>
 </RCC>
