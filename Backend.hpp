@@ -6,8 +6,7 @@
 #include <QSettings>
 #include <GithubAPI.hpp>
 
-class Backend : public QObject
-{
+class Backend : public QObject {
     Q_OBJECT
     Q_PROPERTY(NOTIFY showOrHide);
     Q_PROPERTY(NOTIFY showApp);
@@ -17,18 +16,18 @@ class Backend : public QObject
     Q_PROPERTY(NOTIFY settingsUpdated);
     Q_PROPERTY(NOTIFY error);
     Q_PROPERTY(NOTIFY finished);
-public:
+  public:
     Backend(QObject *parent = nullptr);
     ~Backend();
-public Q_SLOTS:
+  public Q_SLOTS:
     Q_INVOKABLE void init();
     Q_INVOKABLE void updateSettings();
     Q_INVOKABLE void setAuthToken(const QString&);
-private Q_SLOTS:
+  private Q_SLOTS:
     void handleLogin(bool);
-    void handleNotifications(qint64 , qint64);
+    void handleNotifications(qint64, qint64);
     void resetPages();
-signals:
+  signals:
     void quit();
     void finished();
     void settingsUpdated();
@@ -38,17 +37,17 @@ signals:
     void showAuthPage(bool visible);
     void showSettingsPage(bool visible);
     void error(QString title, QString message);
-private:
-    // These settings are the only thing we need to cache 
+  private:
+    // These settings are the only thing we need to cache
     // and others are really not needed.
     bool b_ShowNotifications = false,
-	 b_UseSoundAlert = false,
-	 b_UseNotifySend = false;
+         b_UseSoundAlert = false,
+         b_UseNotifySend = false;
     QString m_Token;
 
     QSettings m_Settings;
     QSystemTrayIcon *m_TIcon = nullptr;
-    GithubAPI *m_API = nullptr; 
+    GithubAPI *m_API = nullptr;
 };
 
 #endif // BACKEND_HPP_INCLUDED

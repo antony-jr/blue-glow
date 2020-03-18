@@ -16,10 +16,10 @@ class SettingsManager : public QObject {
     explicit SettingsManager(QObject *parent = nullptr);
     ~SettingsManager();
     Q_INVOKABLE void setSettings(bool darkMode,
-		                 bool startOnStartup,
-				 bool showPopup,
-				 bool soundAlert,
-				 bool useNotifySend);    
+                                 bool startOnStartup,
+                                 bool showPopup,
+                                 bool soundAlert,
+                                 bool useNotifySend);
     Q_INVOKABLE void getSettings();
     Q_INVOKABLE void deleteToken();
 
@@ -28,12 +28,12 @@ class SettingsManager : public QObject {
     void error(QString);
     void deletedToken();
     void settings(bool darkMode,
-		  bool startOnStartup,
-		  bool showPopup,
-		  bool soundAlert,
-		  bool authenticated,
-		  bool notifySend);    
- 
+                  bool startOnStartup,
+                  bool showPopup,
+                  bool soundAlert,
+                  bool authenticated,
+                  bool notifySend);
+
 };
 
 #endif // SETTINGS_MANAGER_HPP_INCLUDED
