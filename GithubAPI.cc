@@ -4,13 +4,11 @@
 #include <QJsonObject>
 #include <QDebug>
 
-GithubAPI::GithubAPI(QSettings *settings , QObject *parent)
+GithubAPI::GithubAPI(QObject *parent)
 	: QObject(parent),
-	  m_Settings(settings),
-	  m_Manager(new QNetworkAccessManager(parent)),
-	  n_Interval(3000)
+	  n_Interval(3000),
+	  m_Manager(new QNetworkAccessManager(parent))
 {
-	Q_ASSERT(m_Settings != nullptr);
 	Q_ASSERT(m_Manager != nullptr);
 
 	m_Buffer.reset(new QByteArray);
@@ -25,6 +23,19 @@ GithubAPI::~GithubAPI(){
 	m_Manager->deleteLater();
 }
 
+void GithubAPI::clear() {
+	m_Timer.stop();
+	m_Token.clear();
+	m_GithubNotificationUrl.clear();
+	b_Logged = false;
+	m_KnownNotifications->clear();
+	m_Buffer->clear();
+}
+
+void GithubAPI::setToken(const QString &token){
+	m_Token = token;
+}
+
 void GithubAPI::setInterval(qint64 msecs){
 	n_Interval = msecs;
 	return;
@@ -34,7 +45,7 @@ void GithubAPI::init(){
 	if(b_Logged){
 		return;
 	}
-	QNetworkRequest req(QUrl(m_APIUrlTemplate.arg((m_Settings->value("GithubToken")).toString())));
+	QNetworkRequest req(QUrl(m_APIUrlTemplate.arg(m_Token)));
 	auto reply = m_Manager->get(req);
 	connect(reply , &QNetworkReply::downloadProgress , this , &GithubAPI::appendToBuffer);
 	connect(reply , &QNetworkReply::finished , this , &GithubAPI::handleLogin);
@@ -64,7 +75,7 @@ void GithubAPI::handleNetworkError(QNetworkReply::NetworkError code){
 	if(!reply || 
 	   reply->manager()->networkAccessible() != QNetworkAccessManager::Accessible){
 		if(!b_Logged){
-			init();
+			QTimer::singleShot(3000, [&](){ init(); });
 		}else{
 			m_Timer.start();
 		}
@@ -84,11 +95,17 @@ void GithubAPI::handleLogin(){
 	auto json = QJsonDocument::fromJson(*(m_Buffer.data()));	
 	if(QJsonValue::Undefined == ((json.object()).value("message")).type() ||
 	    (json.array()).size()){
-		emit logged((b_Logged = true));
 		m_Buffer->clear();
-		m_GithubNotificationUrl = QUrl(m_APIUrlTemplate.arg((m_Settings->value("GithubToken")).toString()));
-	
 		reply->deleteLater();	
+
+		// Check if the login was successful.	
+		if((json.object()).value("message").toString() == "Bad credentials"){
+			emit logged((b_Logged = false));
+			return;
+		}
+		emit logged((b_Logged = true));
+		m_GithubNotificationUrl = QUrl(m_APIUrlTemplate.arg(m_Token));
+
 		/* Start the notification request loop. */
 		m_Timer.setInterval(n_Interval);
 		m_Timer.start();
@@ -97,6 +114,7 @@ void GithubAPI::handleLogin(){
 	emit logged((b_Logged = false));
 	m_Buffer->clear();
 	reply->deleteLater();
+	return;
 }
 
 void GithubAPI::handleNotification(){

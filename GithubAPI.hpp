@@ -4,7 +4,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-#include <QSettings>
 #include <QScopedPointer>
 #include <QStringList>
 #include <QTimer>
@@ -12,11 +11,13 @@
 class GithubAPI : public QObject {
 	Q_OBJECT
 public:
-	GithubAPI(QSettings * , QObject *parent = nullptr);
+	GithubAPI(QObject *parent = nullptr);
 	~GithubAPI();
 public Q_SLOTS:
 	void setInterval(qint64);
+	void setToken(const QString&);
 	void init();
+	void clear();
 private Q_SLOTS:
 	void requestNotifications();
 	void appendToBuffer(qint64 , qint64);
@@ -35,7 +36,7 @@ private:
 	qint64 n_Interval;
 	QTimer m_Timer;
 	QNetworkAccessManager *m_Manager;	
-	QSettings *m_Settings;
+	QString m_Token;
 	QScopedPointer<QStringList> m_KnownNotifications;
 	QScopedPointer<QByteArray> m_Buffer;
 };

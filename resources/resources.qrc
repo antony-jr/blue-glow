@@ -1,10 +1,10 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>sound.wav</file>
-    <file>loading.gif</file>
     <file>logo.png</file>
     <file>no-notification.png</file>
     <file>has-notification.png</file>
-    <file>banner.png</file>
+    <file>banner-light.png</file>
+    <file>banner-dark.png</file>
 </qresource>
 </RCC>

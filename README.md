@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logo.png" alt="Logo">
+    <img src=".github/banner.png" alt="Logo">
 </p>
 
 <p align="center">
@@ -67,17 +67,19 @@ Only requires a **personal github token** which has a permission to read your no
 
 # Other Platform Support
 
-I don't really think that anyone would use this , I mainly created this for myself. So if you need this application for
-other platforms other than linux , Then I would be happy to activate automatic builds for Windows and MacOSX.
+I don't really think that anyone would use this, I mainly created this for myself. So if you need this application for other platforms other than linux, Then I would be happy to activate automatic builds for Windows and MacOSX.
 (PS: The application is mostly cross platform)
 
+# Artwork
 
-# Icons
+All graphics work by [Cristiano Vitorino](https://github.com/cristianovitorino).
 
-Icons made by [Chanut](https://www.flaticon.com/authors/chanut) and 
-[Pixel-Perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
+The graphics work uses a modified version of bell icon from [Feather Icons](https://github.com/feathericons/feather) which is licensed under MIT.
+
+Font used in the graphic work is [Source Serif Pro](https://fonts.google.com/specimen/Source+Serif+Pro) and it is licensed under Open Font License.
+
 
 # License
 
 The MIT License.   
-Copyright (C) 2019 , [@antony-jr](https://github.com/antony-jr)
+Copyright (C) 2020, [@antony-jr](https://github.com/antony-jr).

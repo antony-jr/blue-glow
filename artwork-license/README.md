@@ -1,5 +1,8 @@
 MIT License
 ===========
+
+Feather Icons
+
 **Original author**
 Copyright © `2013-2017` `Cole Bemis`
 
