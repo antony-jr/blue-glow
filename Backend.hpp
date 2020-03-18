@@ -24,10 +24,13 @@ public Q_SLOTS:
     Q_INVOKABLE void updateSettings();
     Q_INVOKABLE void setAuthToken(const QString&);
 private Q_SLOTS:
+    void updateShown(bool);
+    void showHide();
     void handleLogin(bool);
     void handleNotifications(qint64 , qint64);
     void resetPages();
 signals:
+    void quit();
     void finished();
     void settingsUpdated();
     void showApp(bool visible);
@@ -39,7 +42,8 @@ private:
     // These settings are the only thing we need to cache 
     // and others are really not needed.
     bool b_ShowNotifications = false,
-	 b_UseSoundAlert = false;
+	 b_UseSoundAlert = false,
+	 b_Shown = false;
     QString m_Token;
 
     QSettings m_Settings;

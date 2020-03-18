@@ -23,8 +23,9 @@ script:
   - export VERSION=$(git rev-parse --short HEAD)
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=$(qmake -query QT_INSTALL_QML) -bundle-non-qt-libs
   - wget -c -nv "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" 
-  - cp /usr/lib/x86_64-linux-gnu/libcrypt* appdir/usr/lib
-  - cp /usr/lib/x86_64-linux-gnu/libssl* appdir/usr/lib
+  - cp /usr/lib/x86_64-linux-gnu/libcrypt.so* appdir/usr/lib
+  - cp /usr/lib/x86_64-linux-gnu/libssl.so* appdir/usr/lib
+  - cp /usr/lib/x86_64-linux-gnu/libcrypto.so* appdir/usr/lib
   - chmod +x appimagetool-x86_64.AppImage
   - ./appimagetool-x86_64.AppImage -u "gh-releases-zsync|antony-jr|blue-glow|continuous|BlueGlow*-x86_64.AppImage.zsync" appdir 
 

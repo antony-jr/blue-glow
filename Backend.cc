@@ -1,4 +1,5 @@
 #include <Backend.hpp>
+#include <QMenu>
 #include <QSound>
 
 /* Useful macros to convert bool to Qt::Checked and Qt::Unchecked and vice-versa */
@@ -12,8 +13,19 @@ Backend::Backend(QObject *parent)
     // System Tray Icon.
     m_TIcon = new QSystemTrayIcon(this);
     m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification.png"))));
+    
+    // Menu context for the tray icon
+    QMenu *menu = new QMenu;
+    menu->addAction(QString::fromUtf8("Show / Hide"),
+		    this,
+		    &Backend::showHide);
+    menu->addAction(QString::fromUtf8("Quit"),
+		    this,
+		    &Backend::quit);
+
+    m_TIcon->setContextMenu(menu);
     m_TIcon->show();
-    connect(m_TIcon, &QSystemTrayIcon::activated, [&](){ emit showApp(true); }); 
+    connect(m_TIcon, &QSystemTrayIcon::activated, this, &Backend::showHide); 
     // ----
 
     // Cache Settings
@@ -22,6 +34,7 @@ Backend::Backend(QObject *parent)
     // ---
 
     // Logic
+    connect(this, &Backend::showApp, this, &Backend::updateShown);
     connect(m_API , &GithubAPI::logged , this , &Backend::handleLogin);	
     return;
 }
@@ -50,6 +63,18 @@ void Backend::init()
 }
 
 /* Private slots.*/
+
+void Backend::updateShown(bool visible){
+	b_Shown = visible;
+}
+
+void Backend::showHide(){
+	if(b_Shown){
+		showApp(false);
+	}else{
+		showApp(true);
+	}
+}
 
 void Backend::handleNotifications(qint64 newNotifications , qint64 n){
     if(!n){
