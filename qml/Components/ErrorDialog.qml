@@ -7,21 +7,19 @@ import QtQuick.Controls.Material 2.12
 
 Dialog {
     property ApplicationWindow mainWindow;
+    width: 580
+    height: 185
 
     x: (mainWindow.width - width) / 2
     y: (mainWindow.height - height) / 2
     title: mainWindow.errorTitle
     visible: mainWindow.showErrorDialog
-    contentItem: GridLayout {
-		anchors.fill: parent
-		ColumnLayout {
-			Layout.alignment: Qt.AlignHCenter
-			Text {
-				text: mainWindow.errorMessage
-				font.pixelSize: 14
-			}
-		}
-	}
+    contentItem: Text {
+		Layout.preferredWidth: parent.width - 10
+		text: mainWindow.errorMessage
+		font.pixelSize: 14
+		wrapMode: Text.WordWrap
+    }
     standardButtons: StandardButton.Ok | StandardButton.Cancel
     onAccepted: {
 	    mainWindow.showErrorDialog = false

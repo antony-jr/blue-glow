@@ -16,16 +16,33 @@ GridLayout {
 	anchors.right: parent.right
 	anchors.bottom: parent.bottom
 	columns: 1
-        rows: 1
-
-
+	rows: 1
 	ColumnLayout {
 	      	Layout.preferredWidth: parent.width - 100
 	    	Layout.preferredHeight: parent.height - 50
 	    	Layout.row: 0
 	    	Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 	    	Layout.topMargin: 10
-
+		Button {
+			id: backBtn
+			objectName: "back"
+			highlighted: true	
+			
+			Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+			Layout.preferredWidth: 185
+			Layout.preferredHeight: 50
+			text: qsTr("Go Back")
+			Material.background: Material.Teal
+			onClicked: {
+				mainWindow.showSettingsPage = mainWindow.showAuthPage = mainWindow.showAboutPage = false;
+				if(mainWindow.isAuthenticated){
+					mainWindow.showSettingsPage = true;
+				}else{
+					mainWindow.showAuthPage = true;
+				}
+			}
+		}
+	
 		RowLayout{
 				Layout.alignment: Qt.AlignHCenter
 				Image {
@@ -47,10 +64,10 @@ GridLayout {
 			      qsTr("Copyright \u00A9 <b>Antony Jr</b>.<br>") +
 			      qsTr("All Graphics Design by <b><a href=https://github.com/cristianovitorino>Cristiano Vitorino</a></b>.<br>") + 
 			      qsTr("This program uses modified version of bell logo from <b>Feather Icons</b> by <b>Cole Bemis</b>.<br>")
-			font.pixelSize: 18
+			font.pixelSize: 15
 			wrapMode: Text.WordWrap
 			textFormat: Text.RichText
 			onLinkActivated: Qt.openUrlExternally(link)
 		}
-	}
+	   }
 }

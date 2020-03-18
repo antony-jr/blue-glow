@@ -4,11 +4,12 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
-// import Core.Clipper 1.0
+import Core.Backend 1.0
 
 GridLayout {
 	property ApplicationWindow mainWindow;
 	property Button controlButton : finishBtn;
+	property Backend backend;
 
 	visible: mainWindow.showAuthPage
 	anchors.fill: parent
@@ -21,9 +22,15 @@ GridLayout {
 			cache: true
 			fillMode: Image.PreserveAspectFit
 			source: mainWindow.bannerImage
-		}
 	
-		TextField {	
+		}
+		BusyIndicator {
+			Layout.alignment: Qt.AlignHCenter
+			visible: mainWindow.loading
+			running: mainWindow.loading
+		}
+		TextField {
+			visible: !mainWindow.loading
 			id: tokenText
 			objectName: "tokenValue"
 			placeholderText: "GITHUB AUTHENTICATION TOKEN"
@@ -35,19 +42,17 @@ GridLayout {
 		}
 		
 		Button {
+			visible: !mainWindow.loading
 			id: finishBtn
 			objectName: "authFinish"
 			highlighted: true	
-			property string loadText: qsTr("Authenticating... ")
-			property string beforeText: qsTr("Finish")
-			
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 			Layout.preferredWidth: 200
 			Layout.preferredHeight: 80
-			text: beforeText
+			text: qsTr("Finish")
 			Material.background: Material.Green
 			onClicked: {
-				finishBtn.text = loadText
+				backend.setAuthToken(tokenText.text);
 			}
 		}
 	} // Close ColumnLayout

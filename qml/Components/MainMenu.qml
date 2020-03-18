@@ -7,12 +7,9 @@ MenuBar {
 	    title: qsTr("File")
 
 	    MenuItem {
-		text: qsTr("Settings")
-		enabled: mainWindow.showSettingsMenuItem
+		text: qsTr("Minimize")
 		onTriggered: {
-			mainWindow.showAuthPage = false;
-			mainWindow.showSettingsPage = true;
-			mainWindow.showAboutPage = false;
+			mainWindow.visible = false;
 		}
 	    }
 

@@ -6,24 +6,27 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
+import Core.SettingsManager 1.0
+import Core.Backend 1.0
+
 import "./Components" as Components
 
 ApplicationWindow {
     id: root
     title: qsTr("Blue Glow")
     width: 700
-    height: 450
+    height: 440
     minimumWidth: 600
-    minimumHeight: 400
-    visible: true
+    minimumHeight: 430
+    visible: false
     Material.theme: Material.Light 
 
     Component.onCompleted: {
-	if(darkMode){
-		Material.theme = Material.Dark;
-	}
+	settingsManager.getSettings(); // get settings.
+	
+	backend.init();
 
-        setX(Screen.width / 2 - width / 2);
+	setX(Screen.width / 2 - width / 2);
         setY(Screen.height / 2 - height / 2);
     }
     
@@ -42,12 +45,18 @@ ApplicationWindow {
      * components to navigate through different 
      * screens in the Application.
     */
-    property bool showAuthPage: true; // Default page
-    property bool showSettingsMenuItem: false;
+
+    property bool isDarkMode: false;
+    property bool isRunOnStartup: false;
+    property bool isShowNotifications: false;
+    property bool isUseSoundAlert: false;
+    property bool isAuthenticated: false;
+    property bool loading: false;
+
+    property bool showAuthPage: false;
     property bool showSettingsPage: false;
     property bool showAboutPage: false;
     property bool showErrorDialog: false;
-    property bool darkMode: false;
     property string bannerImage: "qrc:/banner-dark.png";
     property string errorTitle;
     property string errorMessage;
@@ -69,6 +78,7 @@ ApplicationWindow {
     Components.SettingsPage {
 	id: settingsPage
 	mainWindow: root
+	manager: settingsManager
     }
 
     Components.AboutPage {
@@ -79,6 +89,68 @@ ApplicationWindow {
     Components.AuthPage {
         id: mainPage
 	mainWindow: root
+	backend: backend
     }
     // -- End All Pages -- 
+
+    Backend {
+	    id: backend
+	    onShowApp: {
+		    root.visible = visible;
+	    }
+	    onShowAuthPage: {
+		    root.showAuthPage = visible;
+	    }
+	    onShowSettingsPage: {
+		    root.showSettingsPage = visible;
+	    }
+	    onShowLoader: {
+		    root.loading = visible;	    
+	    }
+	    onError: {
+		    root.errorTitle = title;
+		    root.errorMessage = message;
+		    root.showErrorDialog = true;
+	    }
+	    onFinished: {
+		    settingsManager.getSettings();
+	    }
+    }
+    
+    SettingsManager {
+	id: settingsManager
+	onFinished: {
+		settingsManager.getSettings();
+		backend.updateSettings()
+	}
+
+	onDeletedToken: {
+		settingsManager.getSettings();
+		backend.updateSettings();
+		backend.init();
+	}
+
+	onSettings: {
+		root.isDarkMode = darkMode;
+		root.isRunOnStartup = startOnStartup;
+		root.isShowNotifications = showPopup;
+		root.isUseSoundAlert = soundAlert;
+		root.isAuthenticated = authenticated;
+
+		if(root.isDarkMode){
+			root.Material.theme = Material.Dark;
+			root.bannerImage = "qrc:/banner-light.png";
+		}else{
+			root.Material.theme = Material.Light;
+			root.bannerImage = "qrc:/banner-dark.png";
+		}
+
+		root.showAuthPage = root.showSettingsPage = root.showAboutPage = false;
+		if(root.isAuthenticated){
+			root.showSettingsPage = true;
+		}else{
+			root.showAuthPage = true;
+		}
+	}
+    }
 }

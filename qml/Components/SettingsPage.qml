@@ -4,10 +4,11 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
-// import Core.Clipper 1.0
+import Core.SettingsManager 1.0
 
 GridLayout {
 	property ApplicationWindow mainWindow;
+	property SettingsManager manager;
 
 	visible: mainWindow.showSettingsPage
 	anchors.fill: parent
@@ -17,20 +18,24 @@ GridLayout {
 		Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
 		Switch {
-			checked: false
+			id: darkModeSwitch
+			checked: mainWindow.isDarkMode
 			text: qsTr("Enable Dark Mode.")
 		}
 
 		Switch {
-			checked: false 
+			id: runOnStartupSwitch
+			checked: mainWindow.isRunOnStartup
 			text: qsTr("Start Blue Glow on System Startup.")
 		}
 		Switch {
-			checked: false 
+			id: showNotificationsSwitch
+			checked: mainWindow.isShowNotifications
 			text: qsTr("Show popup messages on new notification.")
 		}
 		Switch {
-			checked: false 
+			id: useSoundAlertSwitch
+			checked: mainWindow.isUseSoundAlert
 			text: qsTr("Alert with Sound on new notification.")
 		}
 
@@ -49,6 +54,8 @@ GridLayout {
 			text: qsTr("Save")
 			Material.background: Material.Teal
 			onClicked: {
+				manager.setSettings(darkModeSwitch.checked, runOnStartupSwitch.checked, 
+				showNotificationsSwitch.checked, useSoundAlertSwitch.checked);
 			}
 		}
 			Button {
@@ -61,6 +68,10 @@ GridLayout {
 			Layout.preferredHeight: 70
 			text: qsTr("Reset")
 			onClicked: {
+				darkModeSwitch.checked = mainWindow.isDarkMode;
+				runOnStartupSwitch.checked = mainWindow.isRunOnStartup;
+				showNotificationsSwitch.checked = mainWindow.isShowNotifications;
+				useSoundAlertSwitch.checked = mainWindow.isUseSoundAlert;
 			}
 		}
 			Button {
@@ -74,6 +85,7 @@ GridLayout {
 			text: qsTr("Delete Token")
 			Material.background: Material.Red
 			onClicked: {
+				manager.deleteToken();
 			}
 		}
 	    } // Close Row Layout	
