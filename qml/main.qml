@@ -96,7 +96,11 @@ ApplicationWindow {
     Backend {
 	    id: backend
 	    onShowApp: {
-		    root.visible = visible;
+		    if(visible){
+			    root.show();
+		    }else{
+			    root.hide();
+		    }
 	    }
 	    onShowAuthPage: {
 		    root.showAuthPage = visible;

@@ -9,6 +9,7 @@ Dialog {
     property ApplicationWindow mainWindow;
     width: 580
     height: 185
+    Material.theme: Material.Light
 
     x: (mainWindow.width - width) / 2
     y: (mainWindow.height - height) / 2

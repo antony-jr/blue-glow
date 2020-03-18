@@ -97,9 +97,6 @@ void Backend::handleLogin(bool logged){
 void Backend::setAuthToken(const QString &token){
 	/* Check if its a valid token. */
 	if(token.isEmpty()){
-		resetPages();	
-		emit showAuthPage(true);
-		emit showApp(true);
 		emit error("Invalid Token" , 
 		           "You have given an invalid github token, please enter "
 		           "a valid github token.");
