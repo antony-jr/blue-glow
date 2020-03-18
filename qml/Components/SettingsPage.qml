@@ -24,6 +24,12 @@ GridLayout {
 		}
 
 		Switch {
+			id: notifySend
+			checked: mainWindow.isUseNotifySend
+			text: qsTr("Use notify send if possible.")
+		}
+
+		Switch {
 			id: runOnStartupSwitch
 			checked: mainWindow.isRunOnStartup
 			text: qsTr("Start Blue Glow on System Startup.")
@@ -55,7 +61,8 @@ GridLayout {
 			Material.background: Material.Teal
 			onClicked: {
 				manager.setSettings(darkModeSwitch.checked, runOnStartupSwitch.checked, 
-				showNotificationsSwitch.checked, useSoundAlertSwitch.checked);
+				showNotificationsSwitch.checked, useSoundAlertSwitch.checked, 
+			        notifySend.checked);
 			}
 		}
 			Button {
@@ -72,6 +79,7 @@ GridLayout {
 				runOnStartupSwitch.checked = mainWindow.isRunOnStartup;
 				showNotificationsSwitch.checked = mainWindow.isShowNotifications;
 				useSoundAlertSwitch.checked = mainWindow.isUseSoundAlert;
+				notifySend.checked = mainWindow.isUseNotifySend;
 			}
 		}
 			Button {

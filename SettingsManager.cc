@@ -19,13 +19,15 @@ void SettingsManager::deleteToken()
 void SettingsManager::setSettings(bool darkMode,
 		                  bool startOnStartup,
 				  bool showPopup,
-				  bool soundAlert)
+				  bool soundAlert,
+				  bool useNotifySend)
 {
 	m_Settings.setValue("darkMode" , darkMode);
 	m_Settings.setValue("runOnStartup", startOnStartup);
 	m_Settings.setValue("showNotifications", showPopup);
 	m_Settings.setValue("useSoundAlert", soundAlert);
-	
+	m_Settings.setValue("useNotifySend", useNotifySend);
+
 	if(startOnStartup) {
 		auto arguments = QCoreApplication::arguments();
 		QString entry = QString::fromUtf8("[Desktop Entry]\n"
@@ -62,7 +64,8 @@ void SettingsManager::getSettings()
 		m_Settings.value("runOnStartup").toBool(),
 		m_Settings.value("showNotifications").toBool(),
 		m_Settings.value("useSoundAlert").toBool(),
-		authenticatedToken
+		authenticatedToken,
+		m_Settings.value("useNotifySend").toBool()
 	);
 	return;
 }

@@ -1,6 +1,7 @@
 #include <Backend.hpp>
 #include <QMenu>
 #include <QSound>
+#include <QProcess>
 
 /* Useful macros to convert bool to Qt::Checked and Qt::Unchecked and vice-versa */
 #define IS_CHECKED(checkbox) (checkbox->checkState() == Qt::Checked) ? true : false
@@ -18,23 +19,23 @@ Backend::Backend(QObject *parent)
     QMenu *menu = new QMenu;
     menu->addAction(QString::fromUtf8("Show / Hide"),
 		    this,
-		    &Backend::showHide);
+		    &Backend::showOrHide);
     menu->addAction(QString::fromUtf8("Quit"),
 		    this,
 		    &Backend::quit);
 
     m_TIcon->setContextMenu(menu);
     m_TIcon->show();
-    connect(m_TIcon, &QSystemTrayIcon::activated, this, &Backend::showHide); 
+    connect(m_TIcon, &QSystemTrayIcon::activated, this, &Backend::showOrHide);
     // ----
 
     // Cache Settings
     b_ShowNotifications = m_Settings.value("showNotifications").toBool();
     b_UseSoundAlert = m_Settings.value("useSoundAlert").toBool();
+    b_UseNotifySend = m_Settings.value("useNotifySend").toBool();
     // ---
 
     // Logic
-    connect(this, &Backend::showApp, this, &Backend::updateShown);
     connect(m_API , &GithubAPI::logged , this , &Backend::handleLogin);	
     return;
 }
@@ -49,10 +50,12 @@ void Backend::init()
     emit showLoader(true);	
     m_API->clear();
     if(m_Settings.value("GithubToken").toString().isEmpty()){
+	    resetPages();
 	    emit showLoader(false);
 	    emit showApp(true);
 	    emit showAuthPage(true);
     }else{
+	    resetPages();
 	    emit showApp(false);
 	    emit showAuthPage(true);
 	    emit showLoader(true);
@@ -60,20 +63,6 @@ void Backend::init()
 	    m_API->init();
     }
     return;
-}
-
-/* Private slots.*/
-
-void Backend::updateShown(bool visible){
-	b_Shown = visible;
-}
-
-void Backend::showHide(){
-	if(b_Shown){
-		showApp(false);
-	}else{
-		showApp(true);
-	}
 }
 
 void Backend::handleNotifications(qint64 newNotifications , qint64 n){
@@ -87,8 +76,23 @@ void Backend::handleNotifications(qint64 newNotifications , qint64 n){
     }
 
     if(b_ShowNotifications){
+	  int ret = -1;
+	  if(b_UseNotifySend){
+		  ret = QProcess::execute(QString::fromUtf8("notify-send"),
+				          QStringList() << QString::fromUtf8("-u")
+					  << QString::fromUtf8("critical")
+					  << QString::fromUtf8("-a")
+					  << QString::fromUtf8("Github")
+					  << 
+		QString("%1 new notification(s), from a total of %2 notifications.")
+		.arg(newNotifications).arg(n));
+	  }
+
+	  if(ret == -1 || ret == -2){
+	    // Fallback
 	    m_TIcon->showMessage(QString("%1 new notification(s) on Github").arg(newNotifications),
                          QString("You have a total of %1 notifications on Github.").arg(n));
+	  }
     }
 
     if(b_UseSoundAlert){
@@ -140,6 +144,7 @@ void Backend::setAuthToken(const QString &token){
 void Backend::updateSettings(){
 	b_ShowNotifications = m_Settings.value("showNotifications").toBool();
 	b_UseSoundAlert = m_Settings.value("useSoundAlert").toBool();
+	b_UseNotifySend = m_Settings.value("useNotifySend").toBool(); 
 	emit settingsUpdated();
 }
 

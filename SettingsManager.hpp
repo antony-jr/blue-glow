@@ -18,7 +18,8 @@ class SettingsManager : public QObject {
     Q_INVOKABLE void setSettings(bool darkMode,
 		                 bool startOnStartup,
 				 bool showPopup,
-				 bool soundAlert);    
+				 bool soundAlert,
+				 bool useNotifySend);    
     Q_INVOKABLE void getSettings();
     Q_INVOKABLE void deleteToken();
 
@@ -30,7 +31,8 @@ class SettingsManager : public QObject {
 		  bool startOnStartup,
 		  bool showPopup,
 		  bool soundAlert,
-		  bool authenticated);    
+		  bool authenticated,
+		  bool notifySend);    
  
 };
 

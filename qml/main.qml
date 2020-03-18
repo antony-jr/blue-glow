@@ -51,6 +51,7 @@ ApplicationWindow {
     property bool isShowNotifications: false;
     property bool isUseSoundAlert: false;
     property bool isAuthenticated: false;
+    property bool isUseNotifySend: false;
     property bool loading: false;
 
     property bool showAuthPage: false;
@@ -95,6 +96,13 @@ ApplicationWindow {
 
     Backend {
 	    id: backend
+	    onShowOrHide: {
+		    if(root.visible){
+			    root.hide();
+		    }else{
+			    root.show();
+		    }
+	    }
 	    onShowApp: {
 		    if(visible){
 			    root.show();
@@ -119,6 +127,9 @@ ApplicationWindow {
 	    onFinished: {
 		    settingsManager.getSettings();
 	    }
+	    onQuit: {
+		    Qt.quit();
+	    }
     }
     
     SettingsManager {
@@ -140,6 +151,7 @@ ApplicationWindow {
 		root.isShowNotifications = showPopup;
 		root.isUseSoundAlert = soundAlert;
 		root.isAuthenticated = authenticated;
+		root.isUseNotifySend = notifySend;
 
 		if(root.isDarkMode){
 			root.Material.theme = Material.Dark;

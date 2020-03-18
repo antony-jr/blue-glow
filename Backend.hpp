@@ -9,6 +9,7 @@
 class Backend : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(NOTIFY showOrHide);
     Q_PROPERTY(NOTIFY showApp);
     Q_PROPERTY(NOTIFY showAuthPage);
     Q_PROPERTY(NOTIFY showSettingsPage);
@@ -24,8 +25,6 @@ public Q_SLOTS:
     Q_INVOKABLE void updateSettings();
     Q_INVOKABLE void setAuthToken(const QString&);
 private Q_SLOTS:
-    void updateShown(bool);
-    void showHide();
     void handleLogin(bool);
     void handleNotifications(qint64 , qint64);
     void resetPages();
@@ -33,6 +32,7 @@ signals:
     void quit();
     void finished();
     void settingsUpdated();
+    void showOrHide();
     void showApp(bool visible);
     void showLoader(bool visible);
     void showAuthPage(bool visible);
@@ -43,7 +43,7 @@ private:
     // and others are really not needed.
     bool b_ShowNotifications = false,
 	 b_UseSoundAlert = false,
-	 b_Shown = false;
+	 b_UseNotifySend = false;
     QString m_Token;
 
     QSettings m_Settings;
