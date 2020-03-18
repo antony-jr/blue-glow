@@ -4,11 +4,11 @@ sudo: require
 dist: xenial
 
 before_install:
-  - sudo add-apt-repository ppa:beineri/opt-qt-5.12.3-xenial -y
+  - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-xenial -y
   - sudo apt-get update -qq
 
 install:
-  - sudo apt-get -y install build-essential libgl1-mesa-dev qt512base qt512multimedia qt512quickcontrols2 qt512quickcontrols qt512declarative 
+  - sudo apt-get -y install build-essential libgl1-mesa-dev qt510base qt510multimedia qt510quickcontrols2 qt510quickcontrols qt510declarative 
   - source /opt/qt*/bin/qt*-env.sh
 
 script:
@@ -23,9 +23,9 @@ script:
   - export VERSION=$(git rev-parse --short HEAD)
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=$(qmake -query QT_INSTALL_QML) -bundle-non-qt-libs
   - wget -c -nv "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" 
-  - cp /usr/lib/x86_64-linux-gnu/libcrypt.so* appdir/usr/lib
-  - cp /usr/lib/x86_64-linux-gnu/libssl.so* appdir/usr/lib
-  - cp /usr/lib/x86_64-linux-gnu/libcrypto.so* appdir/usr/lib
+  - cp /usr/lib/x86_64-linux-gnu/libcrypt* appdir/usr/lib
+  - cp /usr/lib/x86_64-linux-gnu/libssl* appdir/usr/lib
+  - cp /usr/lib/x86_64-linux-gnu/libcrypto* appdir/usr/lib
   - chmod +x appimagetool-x86_64.AppImage
   - ./appimagetool-x86_64.AppImage -u "gh-releases-zsync|antony-jr|blue-glow|continuous|BlueGlow*-x86_64.AppImage.zsync" appdir 
 
