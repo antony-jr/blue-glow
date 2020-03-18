@@ -67,16 +67,14 @@ Only requires a **personal github token** which has a permission to read your no
 
 # Other Platform Support
 
-I don't really think that anyone would use this , I mainly created this for myself. So if you need this application for
-other platforms other than linux , Then I would be happy to activate automatic builds for Windows and MacOSX.
+I don't really think that anyone would use this, I mainly created this for myself. So if you need this application for other platforms other than linux, Then I would be happy to activate automatic builds for Windows and MacOSX.
 (PS: The application is mostly cross platform)
-
 
 # Artwork
 
 All graphics work by [Cristiano Vitorino](https://github.com/cristianovitorino).
 
-The graphics work uses a modified version of bell icon from [Feather Icons](https://github.com/feathericons/feather) by [Cole Bemis]().
+The graphics work uses a modified version of bell icon from [Feather Icons](https://github.com/feathericons/feather) which is licensed under MIT.
 
 Font used in the graphic work is [Source Serif Pro](https://fonts.google.com/specimen/Source+Serif+Pro) and it is licensed under Open Font License.
 
