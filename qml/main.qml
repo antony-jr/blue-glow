@@ -58,7 +58,7 @@ ApplicationWindow {
     property bool showSettingsPage: false;
     property bool showAboutPage: false;
     property bool showErrorDialog: false;
-    property string bannerImage: "qrc:/banner-dark.png";
+    property string bannerImage: "qrc:/banner.png";
     property string errorTitle;
     property string errorMessage;
 
@@ -155,10 +155,8 @@ ApplicationWindow {
 
 		if(root.isDarkMode){
 			root.Material.theme = Material.Dark;
-			root.bannerImage = "qrc:/banner-light.png";
 		}else{
 			root.Material.theme = Material.Light;
-			root.bannerImage = "qrc:/banner-dark.png";
 		}
 
 		root.showAuthPage = root.showSettingsPage = root.showAboutPage = false;

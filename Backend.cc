@@ -10,9 +10,20 @@
 Backend::Backend(QObject *parent)
     : QObject(parent),
       m_API(new GithubAPI(this)) {
+    // Cache Settings
+    b_ShowNotifications = m_Settings.value("showNotifications").toBool();
+    b_UseSoundAlert = m_Settings.value("useSoundAlert").toBool();
+    b_UseNotifySend = m_Settings.value("useNotifySend").toBool();
+    b_DarkMode = m_Settings.value("darkMode").toBool();
+    // ---
+
     // System Tray Icon.
     m_TIcon = new QSystemTrayIcon(this);
-    m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification.png"))));
+    if(b_DarkMode){
+    	m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification-white.png"))));
+    }else{
+	m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification-dark.png"))));
+    }
 
     // Menu context for the tray icon
     QMenu *menu = new QMenu;
@@ -27,12 +38,6 @@ Backend::Backend(QObject *parent)
     m_TIcon->show();
     connect(m_TIcon, &QSystemTrayIcon::activated, this, &Backend::showOrHide);
     // ----
-
-    // Cache Settings
-    b_ShowNotifications = m_Settings.value("showNotifications").toBool();
-    b_UseSoundAlert = m_Settings.value("useSoundAlert").toBool();
-    b_UseNotifySend = m_Settings.value("useNotifySend").toBool();
-    // ---
 
     // Logic
     connect(m_API, &GithubAPI::logged, this, &Backend::handleLogin);
@@ -64,10 +69,19 @@ void Backend::init() {
 
 void Backend::handleNotifications(qint64 newNotifications, qint64 n) {
     if(!n) {
-        m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification.png"))));
+  	if(b_DarkMode){
+    	m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification-white.png"))));
+    	}else{
+	m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/no-notification-dark.png"))));
+    	}
         return;
     }
-    m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/has-notification.png"))));
+    
+    if(b_DarkMode){
+    	m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/has-notification-white.png"))));
+    }else{
+	m_TIcon->setIcon(QIcon(QPixmap(QString::fromUtf8(":/has-notification-dark.png"))));
+    }
     if(!newNotifications) {
         return;
     }
@@ -81,7 +95,7 @@ void Backend::handleNotifications(qint64 newNotifications, qint64 n) {
                                     << QString::fromUtf8("-a")
                                     << QString::fromUtf8("Github")
                                     <<
-                                    QString("%1 new notification(s), from a total of %2 notifications.")
+                                    QString("%1 new notification(s). You have a total of %2 notifications.")
                                     .arg(newNotifications).arg(n));
         }
 
@@ -142,6 +156,7 @@ void Backend::updateSettings() {
     b_ShowNotifications = m_Settings.value("showNotifications").toBool();
     b_UseSoundAlert = m_Settings.value("useSoundAlert").toBool();
     b_UseNotifySend = m_Settings.value("useNotifySend").toBool();
+    b_DarkMode = m_Settings.value("darkMode").toBool();
     emit settingsUpdated();
 }
 

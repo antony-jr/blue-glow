@@ -42,7 +42,8 @@ class Backend : public QObject {
     // and others are really not needed.
     bool b_ShowNotifications = false,
          b_UseSoundAlert = false,
-         b_UseNotifySend = false;
+         b_UseNotifySend = false,
+	 b_DarkMode = false;
     QString m_Token;
 
     QSettings m_Settings;

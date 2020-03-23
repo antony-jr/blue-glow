@@ -2,9 +2,10 @@
 <qresource>
     <file>sound.wav</file>
     <file>logo.png</file>
-    <file>no-notification.png</file>
-    <file>has-notification.png</file>
-    <file>banner-light.png</file>
-    <file>banner-dark.png</file>
+    <file>no-notification-dark.png</file>
+    <file>has-notification-dark.png</file>
+    <file>no-notification-white.png</file>
+    <file>has-notification-white.png</file>
+    <file>banner.png</file>
 </qresource>
 </RCC>

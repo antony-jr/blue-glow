@@ -19,6 +19,8 @@ GridLayout {
 		Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 		Image {
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter 
+			Layout.preferredWidth: 230
+			Layout.preferredHeight: 230
 			cache: true
 			fillMode: Image.PreserveAspectFit
 			source: mainWindow.bannerImage
