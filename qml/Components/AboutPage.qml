@@ -62,7 +62,7 @@ GridLayout {
 			verticalAlignment: Qt.AlignTop
 			text: qsTr("This program is licensed under the MIT License.<br>") +
 			      qsTr("Copyright \u00A9 <b>Antony Jr</b>.<br>") +
-			      qsTr("All Graphics Design by <b><a href=https://github.com/cristianovitorino>Cristiano Vitorino</a></b>.<br>") + 
+			      qsTr("All Graphics Design by <b><a href=https://github.com/estatra>Atra</a></b>.<br>") + 
 			      qsTr("This program uses modified version of bell logo from <b>Feather Icons</b>.<br>")
 			font.pixelSize: 15
 			wrapMode: Text.WordWrap

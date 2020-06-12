@@ -72,7 +72,7 @@ I don't really think that anyone would use this, I mainly created this for mysel
 
 # Artwork
 
-All graphics work by [Cristiano Vitorino](https://github.com/cristianovitorino).
+All graphics work by [Atra](https://github.com/estatra).
 
 The graphics work uses a modified version of bell icon from [Feather Icons](https://github.com/feathericons/feather) which is licensed under MIT.
 
