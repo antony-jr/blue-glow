@@ -29,9 +29,6 @@ class GithubAPI : public QObject {
     void notification(qint64, qint64);
     void error(QNetworkReply::NetworkError);
   private:
-    const QString m_APIUrlTemplate =
-        QString::fromUtf8("https://api.github.com/notifications?access_token=%1");
-    QUrl m_GithubNotificationUrl;
     bool b_Logged = false;
     qint64 n_Interval;
     QTimer m_Timer;

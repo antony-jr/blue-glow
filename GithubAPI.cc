@@ -25,7 +25,6 @@ GithubAPI::~GithubAPI() {
 void GithubAPI::clear() {
     m_Timer.stop();
     m_Token.clear();
-    m_GithubNotificationUrl.clear();
     b_Logged = false;
     m_KnownNotifications->clear();
     m_Buffer->clear();
@@ -44,7 +43,8 @@ void GithubAPI::init() {
     if(b_Logged) {
         return;
     }
-    QNetworkRequest req(QUrl(m_APIUrlTemplate.arg(m_Token)));
+    QNetworkRequest req(QUrl("https://api.github.com/notifications"));
+    req.setRawHeader(QByteArray("Authorization"), ("token " + m_Token).toUtf8());
     auto reply = m_Manager->get(req);
     connect(reply, &QNetworkReply::downloadProgress, this, &GithubAPI::appendToBuffer);
     connect(reply, &QNetworkReply::finished, this, &GithubAPI::handleLogin);
@@ -105,7 +105,6 @@ void GithubAPI::handleLogin() {
             return;
         }
         emit logged((b_Logged = true));
-        m_GithubNotificationUrl = QUrl(m_APIUrlTemplate.arg(m_Token));
 
         /* Start the notification request loop. */
         m_Timer.setInterval(n_Interval);
@@ -153,7 +152,8 @@ void GithubAPI::handleNotification() {
 void GithubAPI::requestNotifications() {
     m_Timer.stop();
     m_Buffer->clear();
-    QNetworkRequest req(m_GithubNotificationUrl );
+    QNetworkRequest req(QUrl("https://api.github.com/notifications"));
+    req.setRawHeader(QByteArray("Authorization"), ("token " + m_Token).toUtf8());
     auto reply = m_Manager->get(req);
     connect(reply, &QNetworkReply::downloadProgress, this, &GithubAPI::appendToBuffer);
     connect(reply, &QNetworkReply::finished, this, &GithubAPI::handleNotification);
