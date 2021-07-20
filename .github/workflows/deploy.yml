@@ -39,16 +39,12 @@ jobs:
 
       - name: Install Qt and other Dependencies
         run: |
-          sudo add-apt-repository ppa:beineri/opt-qt-5.12.9-xenial -y
+          sudo add-apt-repository ppa:beineri/opt-qt-5.12.9-bionic -y
           sudo apt-get update -qq
           sudo apt-get -y install build-essential libgl1-mesa-dev xvfb qt512base \
                qt512quickcontrols2 qt512quickcontrols qt512declarative \
-               qt512multimedia \
-               automake libtool \
-               libcairo-dev libfuse-dev zsync desktop-file-utils \
-               ca-certificates autoconf libtool patch wget \
-               vim-common desktop-file-utils pkg-config \
-               libarchive-dev librsvg2-dev librsvg2-bin liblzma-dev
+               qt512multimedia automake libtool libfuse-dev zsync desktop-file-utils \
+               ca-certificates autoconf libtool patch wget
 
       - name: Build BlueGlow
         id: appimage_build
